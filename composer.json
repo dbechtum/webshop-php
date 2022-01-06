@@ -1,0 +1,13 @@
+{
+    "name": "davebechtum/webshop-php",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dave Bechtum",
+            "email": "dbechtum@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
