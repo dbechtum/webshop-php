@@ -22,6 +22,10 @@ Vue.component('category', {
         Event.$on('categoryUpdated', function(category) {
             this.isActive = (category === this.category);         
         }.bind(this));
+        Event.$on('postersLoaded', function(posterdata) {
+            this.posters = posterdata;       
+            console.log(this.posters);  
+        }.bind(this));
     },
     mounted() {
         let category = localStorage.getItem('selectedCategory');

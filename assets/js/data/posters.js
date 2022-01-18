@@ -1,4 +1,4 @@
-const posters = [
+const posterdata = [
     {
         id: 0,
         stock: 100,

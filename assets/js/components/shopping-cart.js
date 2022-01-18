@@ -10,6 +10,7 @@ Vue.component('shopping-cart', {
                     v-bind:key="index" v-bind:index="index"
                     v-bind:title="content.title"
                     v-bind:id="content.id"
+                    v-bind:stock="content.stock"
                     v-bind:orientation="content.orientation"
                     v-bind:size="content.size"
                     v-bind:amount="content.amount">
@@ -25,10 +26,10 @@ Vue.component('shopping-cart', {
         <div class="cartBackground" @click="hideCart()"></div>
     </div>
     `,
-    data(){
+    data() {
         return {
             cartContent: [],
-            posterList: posters,
+            posters: '',
         }
     },
     computed: {
@@ -46,9 +47,9 @@ Vue.component('shopping-cart', {
                 //     subtotal *= discountAmount;
                 //     total += subtotal;
                 // } else {
-                    if(this.posterList[el.id].stock >= 200){
+                    if(this.posters[el.id].stock >= 200){
                         total += ((el.size != 'Small' ? el.size == 'Large' ? 15 : 10 : 5) * el.amount * 0.6);
-                    } else if (this.posterList[el.id].stock>= 100){
+                    } else if (this.posters[el.id].stock>= 100){
                         total += ((el.size != 'Small' ? el.size == 'Large' ? 15 : 10 : 5) * el.amount * 0.8);
                     } else {
                         total += ((el.size != 'Small' ? el.size == 'Large' ? 15 : 10 : 5) * el.amount);
@@ -62,9 +63,9 @@ Vue.component('shopping-cart', {
 
             this.cartContent.forEach(el => {
                 if(el.title!=="Subscription"){
-                    if(this.posterList[el.id].stock >= 200){
+                    if(this.posters[el.id].stock >= 200){
                         total += ((el.size != 'Small' ? el.size == 'Large' ? 15 : 10 : 5) * el.amount * 0.4);
-                    } else if (this.posterList[el.id].stock>= 100){
+                    } else if (this.posters[el.id].stock>= 100){
                         total += ((el.size != 'Small' ? el.size == 'Large' ? 15 : 10 : 5) * el.amount * 0.2);
                     }        
                 }    
@@ -83,14 +84,17 @@ Vue.component('shopping-cart', {
         },
         addToCart: function(poster, orientation, size) {
             let index = this.cartContent.findIndex(
-                x => x.title === poster.title &&
+                x => 
+                x.title === poster.title &&
                 x.id === poster.id &&
+                x.stock === poster.stock &&
                 x.orientation === orientation &&
                 x.size === size);
             if(index === -1){
                 this.cartContent.push({
                     title: poster.title,
                     id: poster.id,
+                    stock: poster.stock,
                     orientation: orientation,
                     size: size,
                     amount: 1
@@ -124,6 +128,9 @@ Vue.component('shopping-cart', {
         }.bind(this));
         Event.$on('removeItem', function(index) {
             this.removeItem(index);
+        }.bind(this));
+        Event.$on('postersLoaded', function(posterdata) {
+            this.posters = posterdata;       
         }.bind(this));
     }
 })

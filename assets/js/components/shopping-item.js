@@ -26,10 +26,9 @@ Vue.component('shopping-item', {
         <p>Subtotal: &#36;{{(price * amount * discount).toFixed(2)}}</p>
     </div>
     `,
-    props: ['index','title','id','orientation','size','amount'],
-    data(){
+    props: ['index','title','id','stock','orientation','size','amount'],
+    data() {
         return {
-            posterList: posters,
             image_path_landscape: "/assets/images/posters/landscape/",
             image_path_portrait: "/assets/images/posters/portrait/",
             image_extension: ".jpg",
@@ -37,18 +36,18 @@ Vue.component('shopping-item', {
     },
     computed: {
         discount() {
-            if (this.posterList[this.id].stock >= 200){
+            if (this.stock >= 200){
                 return 0.6;
-            } else if (this.posterList[this.id].stock >= 100){
+            } else if (this.stock >= 100){
                 return 0.8;
             } else {
                 return 1;
             }
         },
         discount_display() {
-            if (this.posterList[this.id].stock >= 200){
+            if (this.stock >= 200){
                 return "40%";
-            } else if (this.posterList[this.id].stock >= 100){
+            } else if (this.stock >= 100){
                 return "20%";
             } else {
                 return "";

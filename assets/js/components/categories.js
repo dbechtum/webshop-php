@@ -24,16 +24,16 @@ Vue.component('categories', {
     `,
     data(){
         return {
-            posterList: posters,
+            posters: '',
         }
     },
     computed: {
-        //create list of categories from posterList
+        //create list of categories from posters
         categories(){ 
             let catList = [];
             let i = 0;
-            for (poster in this.posterList){
-                let cat = this.posterList[i].category;
+            for (poster in this.posters){
+                let cat = this.posters[i].category;
                 if(cat) {
                     catList.push(cat);
                 }
@@ -46,5 +46,10 @@ Vue.component('categories', {
             //return unique entries in catList as a new array
             return finalCatList;
         }
+    },
+    created() {
+        Event.$on('postersLoaded', function(posterdata) {
+            this.posters = posterdata;       
+        }.bind(this));
     }
 })

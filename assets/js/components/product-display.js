@@ -42,9 +42,9 @@ Vue.component('product-display', {
         <div class="productBackground" @click="hideProduct()"></div>
     </div>
     `,
-    data(){
+    data() {
         return {
-            poster: posters[0],
+            poster: posterdata[0],
             selectedOrientation: 0,
             orientations: ["Landscape", "Portrait"],
             selectedSize: 0,
